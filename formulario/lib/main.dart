@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Login con Bloc & Cubit',
         theme: ThemeData(primarySwatch: Colors.indigo),
-        home: const inicial(),
+        home:  const Inicial(),
       ),
     );
   }

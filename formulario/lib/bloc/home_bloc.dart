@@ -4,7 +4,6 @@ import '../modelo/modelo.dart';
 import '../cubit/formulario_cubit.dart';
 import '../api/api.dart';
 
-
 part 'home_event.dart';
 part 'home_state.dart';
 
@@ -16,6 +15,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<InicioSession>((event, emit) async {
       emit(HomeLoading());
 
+      await Future.delayed(const Duration(seconds: 2));
+
       try {
         final usuarios = await usuarioApi.fetchUsuarios();
 
@@ -23,11 +24,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           (u) => u.correo == event.correo && u.password == event.password,
         );
 
-        emit(HomeSucess(
-          nombre: usuario.nombre ?? "",
-          correo: usuario.correo,
-          password: usuario.password,
-        ));
+        emit(
+          HomeSucess(
+            nombre: usuario.nombre ?? "",
+            correo: usuario.correo,
+            password: usuario.password,
+          ),
+        );
 
         formularioCubit.setSuccess(
           nombre: usuario.nombre ?? "",

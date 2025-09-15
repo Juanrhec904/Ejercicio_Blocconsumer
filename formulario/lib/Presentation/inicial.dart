@@ -5,8 +5,6 @@ import '../bloc/home_bloc.dart';
 import '../cubit/formulario_cubit.dart';
 import 'form.dart';
 
-
-
 class Inicial extends StatefulWidget {
   const Inicial({super.key});
 
@@ -30,7 +28,7 @@ class _InicialState extends State<Inicial> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Formulario Bloc")),
+      appBar: AppBar(title: const Text("Formulario")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -53,29 +51,55 @@ class _InicialState extends State<Inicial> {
             ),
             const SizedBox(height: 20),
 
-        ElevatedButton(
-          
-        onPressed: () {
-        context.read<HomeBloc>().add(
-          InicioSession(
-            correo: _correoController.text,
-            password: _passwordController.text,
-          ),
-        );
+            ElevatedButton(
+              onPressed: () {
+                context.read<HomeBloc>().add(
+                  InicioSession(
+                    correo: _correoController.text,
+                    password: _passwordController.text,
+                  ),
+                );
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BlocProvider.value(
-              value: context.read<FormularioCubit>(),
-              child: const form(),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => BlocProvider.value(
+                          value: context.read<FormularioCubit>(),
+                          child: const form(),
+                        ),
+                  ),
+                );
+              },
+              child: const Text("Ingresar"),
             ),
-          ),
-        );
-      },
-      child: const Text("Ingresar"),
-    ),
-
+            BlocConsumer<HomeBloc, HomeState>(
+              listener: (context, state) {
+                if (state is HomeSucess) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => BlocProvider.value(
+                            value: context.read<FormularioCubit>(),
+                            child: const form(),
+                          ),
+                    ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                if (state is HomeLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is HomeFailure) {
+                  return Text(
+                    state.mensaje,
+                    style: const TextStyle(color: Colors.red),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
           ],
         ),
       ),
