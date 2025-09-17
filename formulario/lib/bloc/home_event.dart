@@ -21,10 +21,12 @@ class PasswordChanged extends HomeEvent {
 }
 
 class InicioSession extends HomeEvent {
+  final String nombre;
   final String correo;
   final String password;
 
   const InicioSession({
+    required this.nombre,
     required this.correo,
     required this.password,
   });
