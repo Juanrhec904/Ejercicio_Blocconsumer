@@ -21,9 +21,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         final usuarios = await usuarioApi.fetchUsuarios();
 
         final usuario = usuarios.firstWhere(
-          (u) => u.correo == event.correo && u.password == event.password,
+          (u) =>
+              u.nombre == event.nombre &&
+              u.correo == event.correo &&
+              u.password == event.password,
         );
-
         emit(
           HomeSucess(
             nombre: usuario.nombre ?? "",

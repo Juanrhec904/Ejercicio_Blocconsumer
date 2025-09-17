@@ -18,6 +18,7 @@ class _InicialState extends State<Inicial> {
 
   @override
   void dispose() {
+    _nombreController.dispose();
     _correoController.dispose();
     _passwordController.dispose();
     super.dispose();

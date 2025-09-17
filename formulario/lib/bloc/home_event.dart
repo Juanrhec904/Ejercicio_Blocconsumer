@@ -32,5 +32,5 @@ class InicioSession extends HomeEvent {
   });
 
   @override
-  List<Object?> get props => [correo, password];
+  List<Object?> get props => [nombre, correo, password];
 }
