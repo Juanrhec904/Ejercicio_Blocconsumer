@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../cubit/formulario_cubit.dart';
 
 class form extends StatelessWidget {
   const form({super.key});
@@ -20,9 +22,28 @@ class form extends StatelessWidget {
             height: 240,
             fit: BoxFit.cover,
           ),
-          Text("Buen dia"),
-          Text("Espero y esten bien"),
-          Text("Mucha suerte"),
+
+          const SizedBox(height: 20),
+
+          BlocBuilder<FormularioCubit, FormularioState>(
+            builder: (context, state) {
+              if (state is FormularioSucess) {
+                return Column(
+                  children: [
+                    Text("Nombre: ${state.nombre}"),
+                    Text("Correo: ${state.correo}"),
+                    Text("Contraseña: ${state.password}"),
+                  ],
+                );
+              } else if (state is FormularioFailure) {
+                return Text(
+                  state.mensaje,
+                  style: const TextStyle(color: Colors.red),
+                );
+              }
+              return const Text("Esperando datos...");
+            },
+          ),
         ],
       ),
     );

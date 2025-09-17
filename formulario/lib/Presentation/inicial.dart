@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formulario/presentation/inicial.dart';
 import '../bloc/home_bloc.dart';
 import '../cubit/formulario_cubit.dart';
 import 'form.dart';
@@ -19,7 +18,6 @@ class _InicialState extends State<Inicial> {
 
   @override
   void dispose() {
-    _nombreController.dispose();
     _correoController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -38,7 +36,7 @@ class _InicialState extends State<Inicial> {
               controller: _nombreController,
               decoration: const InputDecoration(labelText: "Nombre"),
             ),
-            const SizedBox(height: 10),
+
             TextField(
               controller: _correoController,
               decoration: const InputDecoration(labelText: "Correo"),
@@ -55,24 +53,16 @@ class _InicialState extends State<Inicial> {
               onPressed: () {
                 context.read<HomeBloc>().add(
                   InicioSession(
+                    nombre: _nombreController.text,
                     correo: _correoController.text,
                     password: _passwordController.text,
-                  ),
-                );
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => BlocProvider.value(
-                          value: context.read<FormularioCubit>(),
-                          child: const form(),
-                        ),
                   ),
                 );
               },
               child: const Text("Ingresar"),
             ),
+            SizedBox(height: 16),
+
             BlocConsumer<HomeBloc, HomeState>(
               listener: (context, state) {
                 if (state is HomeSucess) {
