@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
+        // 1 instancia homebloc: recibe a formulariocubit para comunicar estados y usuarioApi para verificar credenciales
         BlocProvider(create: (_) => HomeBloc(formularioCubit, usuarioApi)),
         BlocProvider(create: (_) => formularioCubit),
       ],
