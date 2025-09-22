@@ -29,3 +29,4 @@ final class HomeFailure extends HomeState {
     required this.mensaje
   });
 }
+

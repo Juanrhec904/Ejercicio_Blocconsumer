@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/home_bloc.dart';
-import '../cubit/formulario_cubit.dart';
-import 'form.dart';
 
 class Inicial extends StatefulWidget {
   const Inicial({super.key});
@@ -37,7 +35,6 @@ class _InicialState extends State<Inicial> {
               controller: _nombreController,
               decoration: const InputDecoration(labelText: "Nombre"),
             ),
-
             TextField(
               controller: _correoController,
               decoration: const InputDecoration(labelText: "Correo"),
@@ -49,7 +46,7 @@ class _InicialState extends State<Inicial> {
               obscureText: true,
             ),
             const SizedBox(height: 20),
-
+            
             ElevatedButton(
               onPressed: () {
                 context.read<HomeBloc>().add(
@@ -61,35 +58,6 @@ class _InicialState extends State<Inicial> {
                 );
               },
               child: const Text("Ingresar"),
-            ),
-            SizedBox(height: 16),
-
-            BlocConsumer<HomeBloc, HomeState>(
-              listener: (context, state) {
-                if (state is HomeSucess) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => BlocProvider.value(
-                            value: context.read<FormularioCubit>(),
-                            child: const form(),
-                          ),
-                    ),
-                  );
-                }
-              },
-              builder: (context, state) {
-                if (state is HomeLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is HomeFailure) {
-                  return Text(
-                    state.mensaje,
-                    style: const TextStyle(color: Colors.red),
-                  );
-                }
-                return const SizedBox.shrink();
-              },
             ),
           ],
         ),
