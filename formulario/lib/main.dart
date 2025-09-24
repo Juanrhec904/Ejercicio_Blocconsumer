@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formulario/Presentation/failure.dart';
 import 'package:formulario/Presentation/loading.dart';
+import 'package:formulario/Presentation/failure.dart';
 import 'bloc/home_bloc.dart';
 import 'cubit/formulario_cubit.dart';
 import 'api/api.dart';
 import 'presentation/inicial.dart';
 import 'presentation/form.dart';
-import 'presentation/loading.dart';
-import 'presentation/failure.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formularioCubit = FormularioCubit(); 
+    final formularioCubit = FormularioCubit();
     final usuarioApi = UsuarioApi();
 
     return BlocProvider(
@@ -29,17 +27,18 @@ class MyApp extends StatelessWidget {
         title: 'Login con Bloc & Cubit',
         theme: ThemeData(primarySwatch: Colors.indigo),
         home: BlocProvider.value(
-          value: formularioCubit, 
+          value: formularioCubit,
           child: BlocConsumer<HomeBloc, HomeState>(
             listener: (context, state) {
               if (state is HomeSucess) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => BlocProvider.value(
-                      value: formularioCubit,
-                      child: const form(),
-                    ),
+                    builder:
+                        (context) => BlocProvider.value(
+                          value: formularioCubit,
+                          child: const form(),
+                        ),
                   ),
                 );
               }
@@ -60,4 +59,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
