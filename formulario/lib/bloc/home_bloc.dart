@@ -1,15 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../modelo/modelo.dart';
+import 'package:formulario/api/api.dart';
 import '../cubit/formulario_cubit.dart';
-import '../api/api.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final FormularioCubit formularioCubit;
-  final UsuarioApi usuarioApi;
+  final DioApi usuarioApi;
 
   HomeBloc(this.formularioCubit, this.usuarioApi) : super(HomeInitial()) {
     on<InicioSession>((event, emit) async {
@@ -46,4 +45,3 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
   }
 }
-

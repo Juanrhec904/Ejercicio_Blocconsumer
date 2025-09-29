@@ -1,20 +1,32 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import '../modelo/modelo.dart';
 
-class UsuarioApi {
-  final String baseUrl =
-      "https://mocki.io/v1/fe1d41aa-6036-4079-8821-e889a6f90f12";
+class DioApi {
+  final Dio _dio = Dio();
 
   Future<List<Usuario>> fetchUsuarios() async {
-    final response = await http.get(Uri.parse(baseUrl));
+    try {
+      final response = await _dio.get(
+        "https://mocki.io/v1/fe1d41aa-6036-4079-8821-e889a6f90f12",
+      );
 
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
+      final data = response.data as List<dynamic>;
       return data.map((json) => Usuario.fromJson(json)).toList();
-    } else {
-      throw Exception("Error al cargar usuarios: ${response.statusCode}");
+    } on DioException catch (e) {
+      throw Exception("Error en GET: ${e.message}");
+    }
+  }
+
+  Future<Usuario> createUsuario(Usuario usuario) async {
+    try {
+      final response = await _dio.post(
+        "https://jsonplaceholder.typicode.com/posts",
+        data: usuario.toJson(),
+      );
+
+      return Usuario.fromJson(response.data);
+    } on DioException catch (e) {
+      throw Exception("Error en POST: ${e.message}");
     }
   }
 }
-

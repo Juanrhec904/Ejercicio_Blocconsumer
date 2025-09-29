@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formularioCubit = FormularioCubit();
-    final usuarioApi = UsuarioApi();
+    final dioApi = DioApi();
 
     return BlocProvider(
-      create: (_) => HomeBloc(formularioCubit, usuarioApi),
+      create: (_) => HomeBloc(formularioCubit, dioApi),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Login con Bloc & Cubit',
