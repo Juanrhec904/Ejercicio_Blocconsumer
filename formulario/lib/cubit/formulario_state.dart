@@ -28,6 +28,7 @@ final class FormularioLoading extends FormularioState {}
 
 final class FormularioFailure extends FormularioState {
   final String mensaje;
+
   const FormularioFailure({required this.mensaje});
 
   @override

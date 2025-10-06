@@ -13,6 +13,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(this.formularioCubit, this.usuarioApi) : super(HomeInitial()) {
     on<InicioSession>((event, emit) async {
       emit(HomeLoading());
+      formularioCubit.setLoading();
 
       await Future.delayed(const Duration(seconds: 2));
 
@@ -25,13 +26,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               u.correo == event.correo &&
               u.password == event.password,
         );
-        emit(
-          HomeSucess(
-            nombre: usuario.nombre ?? "",
-            correo: usuario.correo,
-            password: usuario.password,
-          ),
-        );
+
+        emit(HomeSucess(
+          nombre: usuario.nombre ?? "",
+          correo: usuario.correo,
+          password: usuario.password,
+        ));
 
         formularioCubit.setSuccess(
           nombre: usuario.nombre ?? "",

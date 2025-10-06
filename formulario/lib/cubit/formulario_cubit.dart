@@ -10,11 +10,7 @@ class FormularioCubit extends Cubit<FormularioState> {
     required String nombre,
     required String correo,
     required String password,
-  }) async {
-    emit(FormularioLoading()); 
-
-    await Future.delayed(const Duration(seconds: 2)); 
-
+  }) {
     emit(FormularioSucess(
       nombre: nombre,
       correo: correo,
@@ -24,5 +20,13 @@ class FormularioCubit extends Cubit<FormularioState> {
 
   void setFailure(String mensaje) {
     emit(FormularioFailure(mensaje: mensaje));
+  }
+
+  void setLoading() {
+    emit(FormularioLoading());
+  }
+
+  void reset() {
+    emit(FormularioInitial());
   }
 }

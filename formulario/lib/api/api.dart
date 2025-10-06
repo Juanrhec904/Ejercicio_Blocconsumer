@@ -7,7 +7,7 @@ class DioApi {
   Future<List<Usuario>> fetchUsuarios() async {
     try {
       final response = await _dio.get(
-        "https://mocki.io/v1/fe1d41aa-6036-4079-8821-e889a6f90f12",
+        "https://mocki.io/v1/3f6f8977-a93b-48c1-b50a-1abe8e337e52",
       );
 
       final data = response.data as List<dynamic>;

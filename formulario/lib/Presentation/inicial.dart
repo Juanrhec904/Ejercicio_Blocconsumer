@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formulario/presentation/form.dart';
 import '../bloc/home_bloc.dart';
 import '../api/api.dart';
 import '../cubit/formulario_cubit.dart';
+import 'form.dart';
 import 'failure.dart';
 import 'loading.dart';
 
@@ -31,6 +31,7 @@ class _InicialState extends State<Inicial> {
   Widget build(BuildContext context) {
     final formularioCubit = FormularioCubit();
     final dioApi = DioApi();
+
     return BlocProvider(
       create: (_) => HomeBloc(formularioCubit, dioApi),
       child: Scaffold(
@@ -41,11 +42,14 @@ class _InicialState extends State<Inicial> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder:
-                      (context) => BlocProvider.value(
-                        value: formularioCubit,
-                        child: const form(),
-                      ),
+                  builder: (_) => BlocProvider.value(
+                    value: formularioCubit,
+                    child: FormScreen(
+                      nombre: _nombreController.text,
+                      correo: _correoController.text,
+                      password: _passwordController.text,
+                    ),
+                  ),
                 ),
               );
             }
@@ -79,12 +83,12 @@ class _InicialState extends State<Inicial> {
                   ElevatedButton(
                     onPressed: () {
                       context.read<HomeBloc>().add(
-                        InicioSession(
-                          nombre: _nombreController.text,
-                          correo: _correoController.text,
-                          password: _passwordController.text,
-                        ),
-                      );
+                            InicioSession(
+                              nombre: _nombreController.text,
+                              correo: _correoController.text,
+                              password: _passwordController.text,
+                            ),
+                          );
                     },
                     child: const Text("Ingresar"),
                   ),
